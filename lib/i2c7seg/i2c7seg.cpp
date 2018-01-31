@@ -24,7 +24,19 @@ void i2c7seg::LCDIntChar(int val, int position)
     {
         if (bitRead(Number[val], i))
         {
+            HT.setLedNow(i + Poss[position]);
+        }
+    }
+}
 
+i2c7seg::SegDisplay(char seg1, bool dot1 = 0, char seg2, bool dot2 = 0, char seg3, bool dot3 = 0 char seg4, bool dot4 = 0){
+
+    //byte character = B00111111;
+
+    for (size_t i = 0; i < 8; i++)
+    {
+        if (bitRead(Number[val], i))
+        {
             HT.setLedNow(i + Poss[position]);
         }
     }
