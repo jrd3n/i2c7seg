@@ -29,19 +29,41 @@ void i2c7seg::LCDIntChar(int val, int position)
     }
 }
 
-i2c7seg::SegDisplay(char seg1, bool dot1 = 0, char seg2, bool dot2 = 0, char seg3, bool dot3 = 0 char seg4, bool dot4 = 0){
+void i2c7seg::SegDisplay(char char1, char char2, char char3, char char4)
+{
+    char inputChar[5] = {char1,
+                         char2,
+                         char3,
+                         char4};
+
+    // Possition[4] = {64, 48, 16, 0}
 
     //byte character = B00111111;
 
-    for (size_t i = 0; i < 8; i++)
+    for (size_t position = 0; position < 4; position++) // this for,  is for selecting the correct segment
     {
-        if (bitRead(Number[val], i))
+        for (size_t i = 0; i < 8; i++)
         {
-            HT.setLedNow(i + Poss[position]);
+            int ledNumber = i + Possition[position];
+            bool segment = bitRead(SevenSegmentASCII[inputChar[position] + 32], i);
+            bool previousSegment = bitRead(SevenSegmentASCII[previousChars[position] + 32], i);
+
+            if (segment != previousSegment)
+            {
+                if (segment)
+                {
+                    HT.setLedNow(ledNumber);
+                }
+
+                if (!segment)
+                {
+                    HT.clearLedNow(ledNumber);
+                }
+            }
         }
     }
-
 }
+
 /****************************************************************/
 
 void i2c7seg::LCDPrint(int val)
