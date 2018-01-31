@@ -9,10 +9,12 @@ class i2c7seg
     i2c7seg();
     void begin();
     void LCDPrint(int displayValue);
+	void SegDisplay(char seg1, bool dot1 = 0, char seg2, bool dot2 = 0, char seg3, bool dot3 = 0 char seg4, bool dot4 = 0);
 
   private:
     void LCDIntChar(int val, int position);
     byte Number[12] = {63, 6, 91, 79, 102, 109, 124, 7, 127, 103};
+	const uint8_t Possition[4] = {64, 48, 16, 0};
     int previousVal;
     const uint8_t SevenSegmentASCII[96] = { /*source https://github.com/dmadison/LED-Segment-ASCII/blob/master/7-Segment/7-Segment-ASCII_BIN.txt */
 	0b00000000, /* (space) */
